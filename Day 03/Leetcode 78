@@ -1,0 +1,26 @@
+Subsets
+
+
+class Solution {
+    List<List<Integer>> ans=new ArrayList<>();
+    public void solve(int[] nums,int idx,List<Integer> curr){
+            ans.add(new ArrayList<>(curr));
+         
+        for(int i=idx;i<nums.length;i++){
+
+            // try: choose krenge
+            curr.add(nums[i]);
+            // Explore krenge
+            solve(nums,i+1,curr);
+            // Backtrack krenge 
+            curr.remove(curr.size()-1);
+        }
+    }
+
+    public List<List<Integer>> subsets(int[] nums) {
+        Arrays.sort(nums);
+        solve(nums,0,new ArrayList<>());
+        return ans;
+
+    }
+}
