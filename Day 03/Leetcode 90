@@ -1,0 +1,22 @@
+Subset II
+
+class Solution {
+    List<List<Integer>> ans=new ArrayList<>();
+    public void solve(int[] nums,int idx, List<Integer> curr){
+        ans.add(new ArrayList<>(curr));
+        for(int i=idx;i<nums.length;i++){
+            if(i>idx && nums[i]==nums[i-1]){
+                continue;
+            }
+            curr.add(nums[i]);      // try krenge ya choose kr liya isse
+            solve(nums,i+1,curr);   // Explore krenge fir iske aage
+            curr.remove(curr.size()-1);     // Backtrack 
+        }
+    }
+
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        Arrays.sort(nums);
+        solve(nums,0,new ArrayList<>());
+        return ans;
+    }
+}
