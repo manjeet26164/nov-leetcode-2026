@@ -1,0 +1,29 @@
+Combination sum II
+
+class Solution {
+    List<List<Integer>> ans = new ArrayList<>();
+
+    public void solve(int k, int remaining, int idx, List<Integer> curr) {
+        if (curr.size() == k) {
+            if (remaining == 0) {
+                ans.add(new ArrayList<>(curr));
+            }
+            return;
+        }
+        for (int i = idx; i <= 9; i++) {
+            if (i > remaining) {
+                break;
+            }
+            if (curr.size() <= k) {
+                curr.add(i);
+                solve(k, remaining - i, i + 1, curr);
+                curr.remove(curr.size() - 1);
+            }
+        }
+    }
+
+    public List<List<Integer>> combinationSum3(int k, int n) {
+        solve(k, n, 1, new ArrayList<>());
+        return ans;
+    }
+}
