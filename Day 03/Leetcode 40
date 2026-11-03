@@ -1,0 +1,32 @@
+Combination Sum II
+
+// Jab bhi duplicates se bachna hota h hm sort kr dete h array ko.
+// agar duplicate aaega to same result aaega to hm continue kr denge 
+
+class Solution {
+    List<List<Integer>> ans=new ArrayList<>();
+    public void solve(int[] nums,int need,List<Integer> curr,int idx){
+        if(need==0){
+            ans.add(new ArrayList<>(curr));
+            return;
+        }
+        for(int i=idx;i<nums.length;i++){
+            if(i>idx && nums[i]==nums[i-1]){
+                continue;
+            }
+            if(nums[i]>need){
+                break;
+            }
+            curr.add(nums[i]);  // Try: current element choose kar rahe hain
+            solve(nums,need-nums[i],curr,i+1);    // Explore: choose karne ke baad aage possibilities check kar rahe hain
+            curr.remove(curr.size()-1);     // Backtrack: element remove karke doosri possibility try karenge
+        }
+        
+        
+    }
+    public List<List<Integer>> combinationSum2(int[] nums, int target) {
+        Arrays.sort(nums);
+        solve(nums,target,new ArrayList<>(),0);
+        return ans;
+    }
+}
