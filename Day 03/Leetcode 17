@@ -1,0 +1,152 @@
+Letter combination of a phone number 
+
+
+/*
+LC 17: Letter Combinations of a Phone Number
+
+APPROACH: BACKTRACKING
+
+1. getLetters(ch):
+   - Current digit ke according possible letters return karta hai.
+   - Example: '2' -> "abc", '3' -> "def".
+
+2. idx ka role:
+   - idx input digits ki position track karta hai.
+   - idx batata hai ki abhi kaunsa digit process karna hai.
+   - idx = 0 -> first digit
+   - idx = 1 -> second digit
+   - idx = 2 -> third digit
+
+3. i ka role:
+   - i current digit ke letters ki position track karta hai.
+   - Example: letters = "abc"
+       i = 0 -> 'a'
+       i = 1 -> 'b'
+       i = 2 -> 'c'
+
+4. WHY i = 0?
+   - Har digit ke letters ek NEW string hote hain.
+   - Jab next digit par jaate hain, uske letters ka index
+     dobara 0 se start hota hai.
+   - Isliye loop i = 0 se start hota hai.
+   - i aur idx alag-alag cheez track karte hain.
+
+5. WHY idx + 1?
+   - Ek digit se ek letter choose karne ke baad
+     next digit process karna hota hai.
+   - Isliye recursive call mein idx + 1 karte hain.
+   - i + 1 nahi, kyunki i letters ka index hai,
+     digits ka nahi.
+
+6. CHOOSE -> EXPLORE -> BACKTRACK
+
+   CHOOSE:
+   curr.append(ch);
+   - Current letter ko combination mein add karo.
+
+   EXPLORE:
+   solve(digits, idx + 1, curr);
+   - Next digit par jaakar uska letter choose karo.
+
+   BACKTRACK:
+   curr.deleteCharAt(curr.length() - 1);
+   - Last selected letter remove karo.
+   - Taaki current digit ka next letter try kar sakein.
+
+7. BASE CASE:
+   if (idx == digits.length())
+   - Saare digits process ho chuke hain.
+   - Ek complete combination mil gaya.
+   - curr.toString() ko answer mein add karo.
+
+8. IMPORTANT DIFFERENCE FROM SUBSETS / COMBINATION SUM:
+
+   Subsets / Combination Sum:
+   - Same array ke elements explore karte hain.
+   - i = idx se loop start hota hai.
+   - Recursive call mein i + 1 dete hain.
+   - Kyunki next search selected element ke baad se
+     start karni hoti hai.
+
+   Letter Combinations:
+   - Har recursion mein current digit ki NEW letters
+     string milti hai.
+   - Isliye i = 0 se loop start hota hai.
+   - Recursive call mein idx + 1 dete hain.
+   - Kyunki next digit process karna hota hai.
+
+DRY RUN: digits = "23"
+
+Digit 2 -> "abc"
+Digit 3 -> "def"
+
+idx = 0, i = 0 -> choose 'a'
+idx = 1, i = 0 -> choose 'd'
+idx = 2 -> "ad" answer mein add
+
+Backtrack:
+'ad' -> remove 'd'
+choose 'e' -> "ae"
+choose 'f' -> "af"
+
+Then backtrack:
+remove 'a', choose 'b'
+-> "bd", "be", "bf"
+
+Then choose 'c'
+-> "cd", "ce", "cf"
+
+OUTPUT:
+["ad","ae","af","bd","be","bf","cd","ce","cf"]
+
+GOLDEN RULE:
+idx = Which digit should I process?
+i   = Which letter should I try from current digit?
+
+Har problem mein i aur idx ka role same nahi hota.
+Unka role problem ki structure decide karti hai.
+*/
+
+
+class Solution {
+    List<String> ans = new ArrayList<>();
+
+    public String getLetters(char ch) {
+        switch (ch) {
+            case '2': return "abc";
+            case '3': return "def";
+            case '4': return "ghi";
+            case '5': return "jkl";
+            case '6': return "mno";
+            case '7': return "pqrs";
+            case '8': return "tuv";
+            case '9': return "wxyz";
+        }
+        return "";
+    }
+
+    public void solve(String digits, int idx, StringBuilder curr) {
+
+        if (idx == digits.length()) {
+            ans.add(curr.toString());
+            return;
+        }
+
+        String letters = getLetters(digits.charAt(idx));
+
+        for (int i = 0; i < letters.length(); i++) {
+            char ch = letters.charAt(i);
+
+            curr.append(ch);                       // CHOOSE
+            solve(digits, idx + 1, curr);          // EXPLORE
+            curr.deleteCharAt(curr.length() - 1);  // BACKTRACK
+        }
+    }
+
+    public List<String> letterCombinations(String digits) {
+        if (digits.length() == 0) return ans;
+
+        solve(digits, 0, new StringBuilder());
+        return ans;
+    }
+}
