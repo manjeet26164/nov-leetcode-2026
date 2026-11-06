@@ -1,0 +1,19 @@
+Delete node in a linked list.
+
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+
+ ==> Node ke pass direct acess diya hua h to abhi pointer ek type se 5 par hi h hme bas usko skip krvana h .
+ */
+class Solution {
+    public void deleteNode(ListNode node) {
+        node.val=node.next.val;
+        node.next=node.next.next;
+    }
+}
