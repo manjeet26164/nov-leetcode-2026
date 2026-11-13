@@ -1,0 +1,32 @@
+Rotate list
+
+// temp ko r steps chlake usko break krke nya listnode set krke last tak pocha ke head se connect krdo.
+
+class Solution {
+    public ListNode rotateRight(ListNode head, int k) {
+        if (head == null || head.next == null)
+            return head;
+        int len = 0;
+        ListNode temp1 = head;
+        while (temp1 != null) {
+            temp1 = temp1.next;
+            len++;
+        }
+        int r = k % len;
+        if (r == 0)
+            return head;
+        ListNode temp = head;
+        for (int i = 0; i < len-r-1; i++) {
+            temp = temp.next;
+        }
+        ListNode newHead = temp.next;
+        temp.next = null;
+        ListNode temp2 = newHead;
+        while (temp2.next != null) {
+            temp2 = temp2.next;
+        }
+        temp2.next = head;
+        return newHead;
+
+    }
+}
