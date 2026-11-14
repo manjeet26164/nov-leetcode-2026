@@ -1,0 +1,26 @@
+Sort list
+
+
+// minHeap (Priority Queue) me listnose store krake usme se remove krte jaege to apne aap sort ho jaegi.
+
+class Solution {
+    public ListNode sortList(ListNode head) {
+        PriorityQueue<ListNode> pq=new PriorityQueue<>(
+            (a,b) -> Integer.compare(a.val,b.val)
+        );
+        ListNode temp=head;
+        while(temp!=null){
+            pq.add(temp);
+            temp=temp.next;
+        }
+        ListNode dummy=new ListNode(-1);
+        ListNode dHead=dummy;
+        while(!pq.isEmpty()){
+            ListNode curr=pq.remove();
+            dHead.next=curr;
+            dHead=dHead.next;
+        }
+        dHead.next=null;
+        return dummy.next;
+    }
+}
