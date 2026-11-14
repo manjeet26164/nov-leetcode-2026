@@ -1,0 +1,28 @@
+Merge k sorted lists
+
+
+// Priority queue ka use krenge k lists ke curr node ko min heap me store kra denge fir min vala poll (remove) kra denge or dummy me store kra denmge , ese kitne bhi listnode ho sab ek sath compare kr skte h.
+
+class Solution {
+    public ListNode mergeKLists(ListNode[] lists) {
+        PriorityQueue<ListNode> pq = new PriorityQueue<>(
+                (a, b) -> Integer.compare(a.val, b.val));
+        for (ListNode node : lists) {
+            if (node != null) {
+                pq.add(node);
+            }
+        }
+        ListNode dummy = new ListNode(-1);
+        ListNode temp = dummy;
+        while (!pq.isEmpty()) {
+            ListNode curr = pq.remove();
+            temp.next = curr;
+            temp = temp.next;
+            if (curr.next != null) {
+                pq.add(curr.next);
+            }
+        }
+        temp.next = null;
+        return dummy.next;
+    }
+}
