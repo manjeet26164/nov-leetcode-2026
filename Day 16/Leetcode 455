@@ -1,0 +1,30 @@
+Assign cookies
+
+// 2 min heap lenge phele vale me students , dusre me cookies.
+// agar student vala chota nikla cookie se to count++ krke student oe cookie  ko remove kra denge 
+// nhi to ccookie choti h mtlb, to cookie ko remove kra denge.
+
+class Solution {
+    public int findContentChildren(int[] g, int[] s) {
+        PriorityQueue<Integer> pq1=new PriorityQueue<>();
+        PriorityQueue<Integer> pq2=new PriorityQueue<>();
+        for(int ele:g){
+            pq1.add(ele);
+        }
+        for(int ele:s){
+            pq2.add(ele);
+        }
+        int count=0;
+        while(!pq1.isEmpty() && !pq2.isEmpty()){
+            if(pq1.peek()<=pq2.peek()){
+                pq1.remove();
+                pq2.remove();
+                count++;
+            }
+            else{
+                pq2.remove();
+            }
+        }
+        return count;
+    }
+}
