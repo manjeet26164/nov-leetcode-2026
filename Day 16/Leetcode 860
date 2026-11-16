@@ -1,0 +1,37 @@
+Lemonade change
+
+
+// agar 5 ka ata hto five++ kra denge fir 10 ka ata h to check krenfe ki hmare pass five >0 h kya.
+// agra five vala h to five-- kra denge or agar 20 ka ata h to hmare pass 10 ka or 5 ka hona chaiye.
+// agr voo h to dono me se ek -- kra denge ya fir 3 5ke minus kra denge.
+// agar esa nhih to return false;
+
+class Solution {
+    public boolean lemonadeChange(int[] bills) {
+        int five = 0;
+        int ten = 0;
+        for (int bill : bills) {
+            if (bill == 5) {
+                five++;
+            } else if (bill == 10) {
+                if (five > 0) {
+                    five--;
+                    ten++;
+                }
+                else {
+                    return false;
+                }
+            } else {
+                if (ten > 0 && five > 0) {
+                    ten--;
+                    five--;
+                } else if (five >= 3) {
+                    five -= 3;
+                } else {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+}
