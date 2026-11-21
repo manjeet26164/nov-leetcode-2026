@@ -1,0 +1,29 @@
+Insert interval
+
+// isme phele interval add krenge fir sort krke comapre krenge or last me array me convert krke return kra denge
+
+class Solution {
+    public int[][] insert(int[][] intervals, int[] newInterval) {
+        List<int[]> list=new ArrayList<>();
+        for(int[] ele: intervals){
+            list.add(ele);
+        }
+        list.add(newInterval);
+        list.sort((a,b) -> a[0]-b[0]);
+
+        List<int[]> ans=new ArrayList<>();
+        int[] prev= list.get(0);
+        for(int i=1;i<list.size();i++){
+            int[] curr=list.get(i);
+            if(prev[1]>=curr[0]){
+                prev[1]=Math.max(curr[1],prev[1]);
+            }
+            else{
+                ans.add(prev);
+                prev=curr;
+            }
+        }
+        ans.add(prev);
+        return ans.toArray(new int[ans.size()][]);
+    }
+}
