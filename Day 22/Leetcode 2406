@@ -1,0 +1,20 @@
+Divide intervals into minimum number or intervals
+
+// minHeap ka use krenge ab imagine krna h.
+// end point note krte chelnge har gropu ka uske aage dekhtenge fir 
+// dry run krne ke baad hi smjh aaega do it.
+
+class Solution {
+    public int minGroups(int[][] intervals) {
+        Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        for (int[] curr : intervals) {
+            if (!pq.isEmpty() && pq.peek() < curr[0]) {
+                pq.remove();
+            }
+            pq.add(curr[1]);
+        }
+        return pq.size();
+
+    }
+}
